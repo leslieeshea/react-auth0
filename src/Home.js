@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
-const Home = (props) => {
-	return (
-		<div>
-			<h1>Home</h1>
-			<button onClick={props.auth.login}>Log In</button>
-		</div>
-	);
+class Home extends Component {
+	render() {
+		const { isAuthenticated, login } = this.props.auth;
+
+		return (
+			<div>
+				<h1>Home</h1>
+				{isAuthenticated() ? (
+					<Link to="/profile">View Profile</Link>
+				) : (
+				<button onClick={login}>Log In</button>
+				)}
+			</div>
+		);
+	}
 }
 
 export default Home;

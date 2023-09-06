@@ -1,6 +1,6 @@
 import auth0 from 'auth0-js';
 
-class Auth {
+export default class Auth {
 	constructor(history) {
 		this.history = history;
 		this.auth0 = new auth0.WebAuth({
@@ -34,7 +34,7 @@ class Auth {
 		const expiresAt = JSON.stringify(
 			authResult.expiresIn * 1000 + new Date().getTime()
 			// authResult.expiresIn contains expiration in seconds
-			// Multiply by 1000 to convert into miliseconds
+			// Multiply by 1000 to convert into milliseconds
 			// Add current Unix epoch time
 			// This gives us the Unix epoch time when the token will expire
 		);
@@ -43,6 +43,10 @@ class Auth {
 		localStorage.setItem("id_token", authResult.idToken);
 		localStorage.setItem("expires_at", expiresAt);
 	};
-}
 
-export default Auth;
+	isAuthenticated = () => {
+		const expiresAt = JSON.parse(localStorage.getItem("expires_at"));
+
+		return new Date().getTime() < expiresAt;
+	}
+}
