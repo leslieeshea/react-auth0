@@ -10,11 +10,39 @@ class Auth {
 			responseType: "token id_token",
 			scope: "openid profile email"
 		});
-	}
+	};
 
 	login = () => {
 		this.auth0.authorize();
-	}
+	};
+
+	handleAuthentication = () => {
+		this.auth0.parseHash((err, authResult) => {
+			if (authResult && authResult.accessToken && authResult.idToken) {
+				this.setSession(authResult);
+				this.history.push("/"); // This will redirect our app to the home page
+			} else if (err) {
+				this.history.push("/");
+				alert(`Error: ${err.error}. Check the console for further details.`);
+				console.log(err);
+			}
+		});
+	};
+
+	setSession = authResult => {
+		// Set the time that the access token will expire
+		const expiresAt = JSON.stringify(
+			authResult.expiresIn * 1000 + new Date().getTime()
+			// authResult.expiresIn contains expiration in seconds
+			// Multiply by 1000 to convert into miliseconds
+			// Add current Unix epoch time
+			// This gives us the Unix epoch time when the token will expire
+		);
+
+		localStorage.setItem("access_token", authResult.accessToken);
+		localStorage.setItem("id_token", authResult.idToken);
+		localStorage.setItem("expires_at", expiresAt);
+	};
 }
 
 export default Auth;
