@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Callback extends Component {
+class Callback extends React.Component {
 	componentDidMount = () => {
 		// Handle authentication if expected values are in the URL
 		if (/access_token|id_token|error/.test(this.props.location.hash)) {
@@ -11,7 +11,9 @@ class Callback extends Component {
 	};
 
 	render () {
-		return <h1>Loading...</h1>
+		return (
+			<h1>Loading...</h1>
+		);
 	}
 }
 

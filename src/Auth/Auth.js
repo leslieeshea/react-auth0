@@ -1,6 +1,6 @@
 import auth0 from 'auth0-js';
 
-export default class Auth {
+class Auth {
 	constructor(history) {
 		this.history = history;
 		this.auth0 = new auth0.WebAuth({
@@ -16,3 +16,5 @@ export default class Auth {
 		this.auth0.authorize();
 	}
 }
+
+export default Auth;
