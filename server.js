@@ -38,7 +38,7 @@ app.get('/private', checkJwt, function(request, response) {
 	});
 });
 
-app.get('/courses', checkJwt, checkScope(["read:courses"]), function(request, response) {
+app.get('/course', checkJwt, checkScope(["read:courses"]), function(request, response) {
 	response.json({
 		courses: [
 			{
