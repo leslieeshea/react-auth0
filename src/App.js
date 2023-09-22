@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import Home from './Home';
 import Profile from './Profile';
 import Nav from './Nav';
@@ -34,6 +34,7 @@ class App extends Component {
           />
           <PrivateRoute
             path="/profile"
+            auth={this.auth}
             component={Profile}
           />
           <Route
@@ -42,10 +43,12 @@ class App extends Component {
           />
           <PrivateRoute
             path="/private"
+            auth={this.auth}
             component={Private}
           />
           <PrivateRoute
             path="/courses"
+            auth={this.auth}
             component={Courses}
             scopes={["read:courses"]}
           />
