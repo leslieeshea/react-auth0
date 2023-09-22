@@ -72,7 +72,7 @@ export default class Auth {
 	};
 
 	getAccessToken = () => {
-		if (_accessToken) {
+		if (!_accessToken) {
 			throw new Error ("No access token found.");
 		}
 
