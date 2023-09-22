@@ -38,6 +38,18 @@ app.get('/private', checkJwt, function(request, response) {
 	});
 });
 
+function checkRole(role) {
+	return function (request, response, next) {
+		const assignedRoles = request.user["http://localhost:3000/roles"];
+
+		if (Array.isArray(assignedRoles) && assignedRoles.includes(role)) {
+			return next();
+		} else {
+			return response.status(401).send("Insufficient role");
+		}
+	}
+}
+
 app.get('/course', checkJwt, checkScope(["read:courses"]), function(request, response) {
 	response.json({
 		courses: [
@@ -50,6 +62,12 @@ app.get('/course', checkJwt, checkScope(["read:courses"]), function(request, res
 				title: "Creating Reusable React Components"
 			}
 		]
+	});
+});
+
+app.get('/admin', checkJwt, checkRole('admin'), function(request, response) {
+	response.json({
+		message: 'Hello from an Admin API!'
 	});
 });
 
