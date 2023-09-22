@@ -38,7 +38,6 @@ class App extends Component {
           />
           <PrivateRoute
             path="/profile"
-            auth={auth}
             component={Profile}
           />
           <Route
@@ -47,12 +46,10 @@ class App extends Component {
           />
           <PrivateRoute
             path="/private"
-            auth={auth}
             component={Private}
           />
           <PrivateRoute
             path="/courses"
-            auth={auth}
             component={Courses}
             scopes={["read:courses"]}
           />
